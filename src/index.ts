@@ -1,4 +1,5 @@
 import lineReader from 'line-reader';
+import fs from 'fs';
 
 interface Movie {
   adult: boolean;
@@ -8,16 +9,24 @@ interface Movie {
   video: boolean;
 }
 
-let i = 0;
-lineReader.eachLine(__dirname + '/source.txt', (line: string) => {
+const movies: Movie[] = [];
+lineReader.eachLine(__dirname + '/source/source.json', (line: string, last) => {
   const movie: Movie = JSON.parse(line);
   
-  if (movie.popularity > 100) {
-    console.log(movie.original_title, movie.popularity);
-    i++;
+  if (movie.popularity > 10) {
+    movies.push(movie);
   }
   
-  if (i > 20) return false;
-}, (error: Error) => {
-  console.log(error);
+  if (last) {
+    fs.writeFile(
+      __dirname + '/output/output.json',
+      JSON.stringify(movies, null, ' '),
+      (err) => {
+        console.error(err);
+      }
+    );
+    return false;
+  }
+  
+  return 1;
 });
