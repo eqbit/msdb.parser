@@ -22,7 +22,7 @@ const parserLogic = (line: string, last: boolean): any => {
   
   if (last) {
     fs.writeFile(
-      __dirname + '/output/output.json',
+      __dirname + '/../output/output.json',
       JSON.stringify(movies, null, ' '),
       (err) => {
         console.error(err);
@@ -42,4 +42,4 @@ const errorHandler = (error: Error) => {
 
 const movies: Movie[] = [];
 const startTime = new Date().getTime();
-lineReader.eachLine(__dirname + '/source/source.json', parserLogic as any, errorHandler as any);
+lineReader.eachLine(__dirname + '/../source/source.json', parserLogic as any, errorHandler as any);
