@@ -9,12 +9,15 @@ interface Movie {
   video: boolean;
 }
 
-const movies: Movie[] = [];
-lineReader.eachLine(__dirname + '/source/source.json', (line: string, last) => {
+const MIN_POPULARITY = 15;
+
+const parserLogic = (line: string, last: boolean): any => {
   const movie: Movie = JSON.parse(line);
   
-  if (movie.popularity > 10) {
-    movies.push(movie);
+  if (movie.popularity >= MIN_POPULARITY) {
+    if (/^([a-zA-Z0-9 _-]+)$/.test(movie.original_title)) {
+      movies.push(movie);
+    }
   }
   
   if (last) {
@@ -25,8 +28,18 @@ lineReader.eachLine(__dirname + '/source/source.json', (line: string, last) => {
         console.error(err);
       }
     );
+    
+    const endTime = new Date().getTime();
+    console.log(`Done in ${Math.floor((endTime - startTime) / 100) / 10} seconds`);
+    
     return false;
   }
-  
-  return 1;
-});
+};
+
+const errorHandler = (error: Error) => {
+  console.error(error);
+};
+
+const movies: Movie[] = [];
+const startTime = new Date().getTime();
+lineReader.eachLine(__dirname + '/source/source.json', parserLogic as any, errorHandler as any);
