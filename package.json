@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/line-reader": "0.0.28",
     "@types/node": "^13.13.5",
+    "@types/request-promise": "^4.1.46",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "eslint": "^6.8.0",
@@ -23,6 +25,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "line-reader": "^0.4.0"
+    "axios": "^0.19.2",
+    "gunzip-file": "^0.1.1",
+    "line-reader": "^0.4.0",
+    "request-promise": "^4.2.5"
   }
 }
