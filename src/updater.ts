@@ -1,5 +1,4 @@
 import { ShortMovie } from './types';
-import { sleep } from './utils';
 import axios from 'axios';
 
 const movies: ShortMovie[] = require('./output/output.json');
@@ -9,17 +8,15 @@ const update = async (tmdbId: number) => {
   console.log(response.data.message);
 };
 
-let i = 0;
-
 export const updater = async () => {
-  i++;
-  if (movies && movies.length && i < 10) {
+  if (movies && movies.length) {
     const movie = movies.shift();
     if (movie) {
-      await update(movie.id).then(async () => {
-        await sleep(250);
+      await update(movie.id).then(() => {
         updater();
       });
     }
+  } else {
+    console.log('Done');
   }
 };
